@@ -11,7 +11,7 @@ import { useState } from "react";
 const Sidebar = ({ expand, setExpand }) => {
   const { openSignIn } = useClerk();
 
-  const { user } = useAppContext();
+  const { user, chats, setChats, createNewChat } = useAppContext();
 
   const [openMenu, setOpenMenu] = useState({ id: 0, open: false });
 
@@ -61,6 +61,7 @@ const Sidebar = ({ expand, setExpand }) => {
         </div>
 
         <button
+          onClick={createNewChat}
           className={`mt-8 flex items-center justify-center cursor-pointer ${
             expand
               ? "bg-primary hover:opacity-90 rounded-2xl gap-2 p-2.5 w-max"
@@ -84,8 +85,16 @@ const Sidebar = ({ expand, setExpand }) => {
             expand ? "block" : "hidden"
           }`}>
           <p className="my-1">Recents</p>
+          {chats.map((chat, index) => (
+            <ChatLabel
+              key={index}
+              name={chat.name}
+              id={chat.id}
+              openMenu={openMenu}
+              setOpenMenu={setOpenMenu}
+            />
+          ))}
           {/* chatlabel */}
-          <ChatLabel openMenu={openMenu} setOpenMenu={setOpenMenu} />
         </div>
       </div>
 
